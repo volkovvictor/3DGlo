@@ -1,5 +1,5 @@
-import moduleOne from './modules/one';
-import moduleTwo from './modules/two';
+'use strict';
 
-moduleOne();
-moduleTwo();
+import timer from './modules/timer';
+
+timer('26 February 2022');
