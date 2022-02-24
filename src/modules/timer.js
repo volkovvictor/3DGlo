@@ -3,6 +3,8 @@ const timer = (deadline) => {
    const minutes = document.getElementById('timer-minutes');
    const seconds = document.getElementById('timer-seconds');
 
+   let idInterval;
+
    const getTimeRemaining = () => {
       const dateStop = new Date(deadline).getTime();
       const dateNow = new Date().getTime();
@@ -12,36 +14,34 @@ const timer = (deadline) => {
       const seconds = Math.floor(timeRemaining % 60);
 
       return {timeRemaining, hours, minutes, seconds};
-   }
+   };
 
+   const addZero = (num) => {
+      if(num.toString().length === 1) {
+         return '0' + num;
+      } else {
+         return num;
+      }
+   };
 
    const updateTime = () => {
       const getTime = getTimeRemaining();
 
-      for(let key in getTime) {
-         if(key !== 'timeRemaining') {
-            let time = getTime[key];
+      hours.textContent = addZero(getTime.hours);
+      minutes.textContent = addZero(getTime.minutes);
+      seconds.textContent = addZero(getTime.seconds);
 
-            if(getTime[key].toString().length === 1) {
-               getTime[key] = '0' + getTime[key];
-            }
-         }
-      }
-
-      hours.textContent = getTime.hours;
-      minutes.textContent = getTime.minutes;
-      seconds.textContent = getTime.seconds;
-
-      if(getTime.timeRemaining > 0) {
-         setInterval(updateTime, 1000);
-      } else {
+      if(getTime.timeRemaining <= 0) {
+         clearInterval(idInterval);
          hours.textContent = '00';
          minutes.textContent = '00';
          seconds.textContent = '00';
       }
    }
 
-   updateTime()
+   updateTime();
+
+   idInterval = setInterval(updateTime, 1000);
 };
 
 export default timer;
