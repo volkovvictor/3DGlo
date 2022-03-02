@@ -6,6 +6,7 @@ import modal from './modules/modal';
 import scroll from './modules/scroll';
 import tabs from './modules/tabs';
 import slider from './modules/slider';
+import calc from './modules/calc';
 
 timer('26 February 2022');
 menu();
@@ -13,3 +14,4 @@ modal();
 scroll();
 tabs();
 slider('.portfolio-content', '.portfolio-item', '.portfolio-dots');
+calc(100);
