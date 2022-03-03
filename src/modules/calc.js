@@ -29,13 +29,13 @@ const calc = (price = 100) => {
       }
 
       const animTotal = () => {
-         count++;
          if(count > totalValue) {
             clearInterval(interval);
             return;
          } 
-      
+
          total.textContent = count;
+         count++;
 
          interval = setInterval(animTotal, 50);
       };
