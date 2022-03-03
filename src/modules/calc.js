@@ -1,3 +1,5 @@
+import { animate } from './helpers';
+
 const calc = (price = 100) => {
    const calcBlock = document.querySelector('.calc-block');
    const calcType = document.querySelector('.calc-type');
@@ -13,7 +15,6 @@ const calc = (price = 100) => {
       let totalValue = 0;
       let calcCountValue = 1;
       let calcDayValue = 1;
-      let interval;
       let count = 0;
 
       if(calcCount.value && calcCount.value > 1) {
@@ -28,19 +29,15 @@ const calc = (price = 100) => {
          totalValue = price * calcTypeValue * calcSquareValue * calcCountValue * calcDayValue;
       }
 
-      const animTotal = () => {
-         if(count > totalValue) {
-            clearInterval(interval);
-            return;
-         } 
-
-         total.textContent = count;
-         count++;
-
-         interval = setInterval(animTotal, 50);
-      };
-
-      animTotal();
+      animate({
+         duration: 500,
+         timing(timeFraction) {
+            return timeFraction;
+         },
+         draw(progress) {
+            total.textContent = Math.floor(progress * totalValue);
+         }
+      });
    };
 
    calcBlock.addEventListener('change', (e) => {

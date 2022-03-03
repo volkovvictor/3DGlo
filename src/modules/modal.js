@@ -1,3 +1,5 @@
+import { animate } from './helpers';
+
 const modal = () => {
    const popup = document.querySelector('.popup');
    const popupBtns = document.querySelectorAll('.popup-btn');
@@ -17,14 +19,18 @@ const modal = () => {
       }
    };
 
-   const animPopup = () => {
-      popupContent.style.opacity = '1';
-   };
-
    const openPopup = () => {
       resizeWidth();
       popup.style.display = 'block';
-      requestAnimationFrame(animPopup);
+      animate({
+         duration: 300,
+         timing(timeFraction) {
+            return timeFraction;
+         },
+         draw(progress) {
+            popupContent.style.opacity = progress;
+         }
+         });
    };
 
    const closePopup = () => {
