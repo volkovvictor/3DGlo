@@ -1,3 +1,5 @@
+import { animate } from './helpers';
+
 const sendForm = ({ formId, someElement = [] }) => {
    const form = document.getElementById(formId);
    const statusBlock = document.createElement('div');
@@ -41,6 +43,18 @@ const sendForm = ({ formId, someElement = [] }) => {
       statusBlock.innerHTML = loadIcon;
       form.append(statusBlock);
 
+      const img = statusBlock.querySelector('img');
+            
+            animate({
+               duration: 2000,
+               timing(timeFraction) {
+                  return timeFraction;
+               },
+               draw(progress) {
+                  img.style.transform = `rotate(${progress * 360}deg)`;
+               }
+            });
+
       formData.forEach((val, key) => {
          formBody[key] = val;
       });
@@ -62,7 +76,18 @@ const sendForm = ({ formId, someElement = [] }) => {
             formElements.forEach(input => {
                input.value = '';
                input.classList.remove('success');
-               statusBlock.innerHTML = successIcon;
+            });
+            statusBlock.innerHTML = successIcon;
+            const img = statusBlock.querySelector('img');
+
+            animate({
+               duration: 300,
+               timing(timeFraction) {
+                  return timeFraction;
+               },
+               draw(progress) {
+                  img.style.transform = `scale(${progress})`;
+               }
             });
          }).catch(error => {
             statusBlock.style.color = 'red';
