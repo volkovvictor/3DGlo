@@ -5,16 +5,21 @@ const validation = () => {
       const inputs = form.querySelectorAll('input');
 
       inputs.forEach(input => {
-         if(input.getAttribute("name") === "user_name" || input.getAttribute("name") === "user_message") {
+         if(input.getAttribute("name") === "user_name") {
             input.addEventListener('input', () => {
                input.value = input.value.replace(/[^а-яА-Я\s-]/g, "");
+            });
+         }
+         if(input.getAttribute("name") === "user_message") {
+            input.addEventListener('input', () => {
+               input.value = input.value.replace(/[^а-яА-Я\s-\.,;:\?\!]/g, "");
             });
          }
          if(input.getAttribute("name") === "user_email") {
             input.addEventListener('input', () => input.value = input.value.replace(/[^\w@-_\.!~\*']/g, ""));
          }
          if(input.getAttribute("name") === "user_phone") {
-            input.addEventListener('input', () => input.value = input.value.replace(/[^\d()-]/g, ""));
+            input.addEventListener('input', () => input.value = input.value.replace(/[^+\d()-]/g, ""));
          }
       });
    });
