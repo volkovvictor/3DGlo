@@ -12,8 +12,20 @@ const sendForm = ({ formId, someElement = [] }) => {
 
       list.forEach(input => {
          input.classList.add('success');
+         input.style.border = 'none';
 
          if(input.value.trim() === '') {
+            input.classList.remove('success');
+            input.style.border = '4px solid red';
+         }
+
+         if(input.getAttribute('name') === 'user_name' && input.value.length < 2) {
+            input.style.border = '4px solid red';
+            input.classList.remove('success');
+         }
+
+         if(input.getAttribute('name') === 'user_phone' && input.value.length < 11) {
+            input.style.border = '4px solid red';
             input.classList.remove('success');
          }
 
@@ -24,6 +36,7 @@ const sendForm = ({ formId, someElement = [] }) => {
 
       return success;
    };
+
 
    const sendData = (data) => {
       return fetch('https://jsonplaceholder.typicode.com/posts', {
@@ -40,21 +53,6 @@ const sendForm = ({ formId, someElement = [] }) => {
       const formData = new FormData(form);
       const formBody = {};
 
-      statusBlock.innerHTML = loadIcon;
-      form.append(statusBlock);
-
-      const img = statusBlock.querySelector('img');
-            
-            animate({
-               duration: 2000,
-               timing(timeFraction) {
-                  return timeFraction;
-               },
-               draw(progress) {
-                  img.style.transform = `rotate(${progress * 360}deg)`;
-               }
-            });
-
       formData.forEach((val, key) => {
          formBody[key] = val;
       });
@@ -70,8 +68,22 @@ const sendForm = ({ formId, someElement = [] }) => {
             formBody[elem.id] = thisElem.value;
          }
       });
-      
+
       if(validate(formElements)) {
+         statusBlock.innerHTML = loadIcon;
+         form.append(statusBlock);
+
+         const img = statusBlock.querySelector('img');
+               
+         animate({
+            duration: 2000,
+            timing(timeFraction) {
+               return timeFraction;
+            },
+            draw(progress) {
+               img.style.transform = `rotate(${progress * 360}deg)`;
+            }
+         });
          sendData(formBody).then(data => {
             formElements.forEach(input => {
                input.value = '';
