@@ -6,36 +6,29 @@ const modal = () => {
    const popupClose = popup.querySelector('.popup-close');
    const popupContent = popup.querySelector('.popup-content');
 
-   let idAnimation;
-
    const resizeWidth = () => {
       if(window.innerWidth < 768) {
-         popupContent.style.opacity = '1';
-         popupContent.style.transition = 'none';
-         clearInterval(idAnimation);
+         cancelAnimationFrame(animate);
       } else {
-         popupContent.style.transition = `all 0.5s linear`;
-         popupContent.style.opacity = '0';
+         animate({
+            duration: 300,
+            timing(timeFraction) {
+               return timeFraction;
+            },
+            draw(progress) {
+               popupContent.style.opacity = progress;
+            }
+            });
       }
    };
 
    const openPopup = () => {
-      resizeWidth();
       popup.style.display = 'block';
-      animate({
-         duration: 300,
-         timing(timeFraction) {
-            return timeFraction;
-         },
-         draw(progress) {
-            popupContent.style.opacity = progress;
-         }
-         });
+      resizeWidth();
    };
 
    const closePopup = () => {
       popup.style.display = 'none';
-      popupContent.style.opacity = '0';
    };
 
    popupBtns.forEach(btn => {

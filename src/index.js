@@ -10,7 +10,7 @@ import validation from './modules/validation';
 import calc from './modules/calc';
 import sendForm from './modules/sendForm';
 
-timer('26 February 2022');
+timer('15 Marth 2022');
 menu();
 modal();
 scroll();
